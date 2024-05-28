@@ -41,5 +41,4 @@ class GitHubApiClient {
         }
         task.resume()
     }
-    
 }
