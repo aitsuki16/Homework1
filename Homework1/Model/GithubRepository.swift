@@ -19,10 +19,9 @@ class GithubRepository {
             switch result {
             case .success(let entities):
                 completion(.success(entities))
-                           case .failure(let error):
-                            completion(.failure(error))
+            case .failure(let error):
+                completion(.failure(error))
             }
-            
         }
     }
 }

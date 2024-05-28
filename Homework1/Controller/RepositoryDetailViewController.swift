@@ -20,12 +20,12 @@ class RepositoryDetailViewController: UIViewController {
                webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
                self.view.addSubview(webView)
                
-               if let repository = repository {
-                   let urlString = "https://github.com/\(repository.name)"
-                   if let url = URL(string: urlString) {
-                       let request = URLRequest(url: url)
-                       webView.load(request) 
-                   }
+        if let repository = repository {
+            let urlString = "https://github.com/\(repository.name)"
+            if let url = URL(string: urlString) {
+                let request = URLRequest(url: url)
+                webView.load(request)
+            }
         }
     }
 }

@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 class GithubUseCase {
     private let repository: GithubRepository
     
@@ -16,9 +15,9 @@ class GithubUseCase {
     }
     
     func getRepositories(completion: @escaping (Result<[GitHubEntity], Error>) -> Void) {
-            repository.fetchRepositories { result in
-                completion(result)
-            }
+        repository.fetchRepositories { result in
+            completion(result)
+        }
     }
 }
 

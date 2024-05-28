@@ -8,15 +8,13 @@
 import Foundation
 
 class GitHubApiClient {
-    
     private let baseURL: URL?
-        
-        init() {
-            self.baseURL = URL(string: "https://api.github.com/search/repositories?q=jquery+in:name")
-        }
+    
+    init() {
+        self.baseURL = URL(string: "https://api.github.com/search/repositories?q=jquery+in:name")
+    }
     
     func getRepositories(completion:@escaping (Result<[GitHubEntity],Error>) -> Void) {
-        
         guard let url = baseURL else {
             completion(.failure(NSError(domain: "invalid URL", code: -1, userInfo: nil)))
             

@@ -10,10 +10,10 @@ import UIKit
 class RepositoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var tableView: UITableView!
-
+    
     private let useCase = GithubUseCase()
     private var repositories: [GitHubEntity] = []
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,6 @@ class RepositoriesViewController: UIViewController, UITableViewDelegate, UITable
         
         fetchRepositories()
     }
-    
     
     private func fetchRepositories() {
         useCase.getRepositories { [weak self] result in
@@ -37,14 +36,13 @@ class RepositoriesViewController: UIViewController, UITableViewDelegate, UITable
             case .failure(let error):
                 print("Failed to fetcg repositories: \(error)")
             }
-            
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return repositories.count
-                
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,5 +62,4 @@ class RepositoriesViewController: UIViewController, UITableViewDelegate, UITable
         detailVC.repository = repository
         navigationController?.pushViewController(detailVC, animated: true)
     }
-
 }
