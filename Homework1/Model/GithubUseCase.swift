@@ -8,3 +8,17 @@
 import Foundation
 
 
+class GithubUseCase {
+    private let repository: GithubRepository
+    
+    init(repository: GithubRepository = GithubRepository()) {
+        self.repository = repository
+    }
+    
+    func getRepositories(completion: @escaping (Result<[GitHubEntity], Error>) -> Void) {
+            repository.fetchRepositories { result in
+                completion(result)
+            }
+    }
+}
+

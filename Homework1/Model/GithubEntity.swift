@@ -7,3 +7,16 @@
 
 import Foundation
 
+struct GitHubEntity: Codable {
+    let name: String
+    let stargazersCount: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case stargazersCount = "stargazers_count"
+    }
+}
+
+struct GitHubSearchResult: Codable {
+    let items: [GitHubEntity]
+}
