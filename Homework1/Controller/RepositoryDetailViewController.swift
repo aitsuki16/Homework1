@@ -21,7 +21,8 @@ class RepositoryDetailViewController: UIViewController {
                self.view.addSubview(webView)
                
         if let repository = repository {
-            let urlString = "https://github.com/\(repository.name)"
+//            let urlString = "https://github.com/\(repository.name)"
+            let urlString = repository.owner.htmlURL
             if let url = URL(string: urlString) {
                 let request = URLRequest(url: url)
                 webView.load(request)
