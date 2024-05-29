@@ -17,7 +17,6 @@ class GitHubApiClient {
     func getRepositories(completion:@escaping (Result<[GitHubEntity],Error>) -> Void) {
         guard let url = baseURL else {
             completion(.failure(NSError(domain: "invalid URL", code: -1, userInfo: nil)))
-            
             return
         }
         

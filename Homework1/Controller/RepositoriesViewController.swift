@@ -49,8 +49,6 @@ class RepositoriesViewController: UIViewController, UITableViewDelegate, UITable
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: GitHubCell.self), for: indexPath) as? GitHubCell {
             let repository = repositories[indexPath.row]
-//            cell.repositoryName.text = repository.name
-//            cell.stars.text = "\(repository.stargazersCount)"
             cell.configure(with: repository)
             return cell
         }
@@ -58,11 +56,15 @@ class RepositoriesViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //i dont know...
         tableView.deselectRow(at: indexPath, animated: true)
         let repository = repositories[indexPath.row]
         let detailVC = RepositoryDetailViewController()
         detailVC.repository = repository
         navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        return 60
     }
 }

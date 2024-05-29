@@ -23,6 +23,6 @@ class GitHubCell: UITableViewCell {
     
     func configure(with repository: GitHubEntity) {
         repositoryName.text = repository.name
-        stars.text = "Stars: \(repository.stargazersCount)"
+        stars.text = "\(repository.stargazersCount)"
     }
 }
