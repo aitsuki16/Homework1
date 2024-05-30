@@ -14,8 +14,9 @@ class GithubUseCase {
         self.repository = repository
     }
     
-    func getRepositories(completion: @escaping (Result<[GitHubEntity], Error>) -> Void) {
-        repository.fetchRepositories { result in
+    func getRepositories(searchQuery: String,
+                         completion: @escaping (Result<[GitHubEntity], Error>) -> Void) {
+        repository.fetchRepositories(searchQuery: searchQuery) { result in
             completion(result)
         }
     }

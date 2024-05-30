@@ -14,8 +14,8 @@ class GithubRepository {
         self.apiClient = apiClient
     }
     
-    func fetchRepositories(completion: @escaping( Result<[GitHubEntity], Error>) -> Void) {
-        apiClient.getRepositories { result in
+    func fetchRepositories(searchQuery: String, completion: @escaping( Result<[GitHubEntity], Error>) -> Void) {
+        apiClient.getRepositories(searchQuery: searchQuery) { result in
             switch result {
             case .success(let entities):
                 completion(.success(entities))

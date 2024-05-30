@@ -17,15 +17,19 @@ class RepositoryDetailViewController: UIViewController {
         super.viewDidLoad()
         
         webView = WKWebView(frame: self.view.bounds)
-               webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-               self.view.addSubview(webView)
-               
-        if let repository = repository {
-            let urlString = repository.owner.htmlURL
-            if let url = URL(string: urlString) {
-                let request = URLRequest(url: url)
-                webView.load(request)
-            }
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(webView)
+        NSLayoutConstraint.activate([
+            webView.topAnchor.constraint(equalTo: view.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+        ])
+        
+        if let repository,
+           let url = URL(string: repository.owner.htmlURL) {
+            webView.load( URLRequest(url: url))
         }
     }
 }

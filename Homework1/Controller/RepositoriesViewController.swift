@@ -7,9 +7,10 @@
 
 import UIKit
 
-class RepositoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class RepositoriesViewController: UIViewController {
     
     @IBOutlet var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     private let useCase = GithubUseCase()
     private var repositories: [GitHubEntity] = []
@@ -20,13 +21,13 @@ class RepositoriesViewController: UIViewController, UITableViewDelegate, UITable
         
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UINib(nibName: "GitHubCell", bundle: nil), forCellReuseIdentifier: String(describing: GitHubCell.self))
-        
-        fetchRepositories()
+        tableView.register(UINib(nibName: String(describing: GitHubCell.self),
+                                 bundle: nil), forCellReuseIdentifier: String(describing: GitHubCell.self))
+        searchBar.delegate = self
     }
     
-    private func fetchRepositories() {
-        useCase.getRepositories { [weak self] result in
+    private func fetchRepositories(searchQuery: String) {
+        useCase.getRepositories(searchQuery: searchQuery) { [weak self] result in
             switch result {
             case .success(let repositories):
                 self?.repositories = repositories
@@ -34,19 +35,35 @@ class RepositoriesViewController: UIViewController, UITableViewDelegate, UITable
                     self?.tableView.reloadData()
                 }
             case .failure(let error):
-                print("Failed to fetcg repositories: \(error)")
+                print("Failed to fetch repositories: \(error)")
             }
         }
     }
+}
+
+extension RepositoriesViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let query = searchBar.text, !query.isEmpty else {
+            return
+        }
+        searchBar.resignFirstResponder()
+        fetchRepositories(searchQuery: query)
+    }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            repositories = []
+            tableView.reloadData()
+        }
+    }
+}
+
+extension RepositoriesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return repositories.count
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: GitHubCell.self), for: indexPath) as? GitHubCell {
             let repository = repositories[indexPath.row]
             cell.configure(with: repository)
@@ -63,8 +80,7 @@ class RepositoriesViewController: UIViewController, UITableViewDelegate, UITable
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
 }
